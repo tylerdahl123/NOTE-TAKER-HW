@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/notes", (req, res) => {
+app.get("/notes.html", (req, res) => {
     res.sendFile(path.join(__dirname, "Develop/public/notes.html"));
 });
 
@@ -36,15 +36,15 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", function(req, res) {
     
     fs.readFile(path.join(__dirname, "Develop/db/db.json"), "utf8", (err, data) => {
-        if (err) throw err;
-        const returnedData = JSON.parse(data);
+    if (err) throw err;
+    const returnedData = JSON.parse(data);
     let noteId = req.body;
     let id = returnedData.length;
     noteId.id = id +1;
     returnedData.push(noteId);
     fs.writeFile(path.join(__dirname, "Develop/db/db.json"), JSON.stringify(returnedData),err => {
-        if (err) throw err;
-        res.json(returnedData);
+    if (err) throw err;
+    res.json(returnedData);
        
     })
     });
