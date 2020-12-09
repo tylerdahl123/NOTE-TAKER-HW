@@ -32,7 +32,30 @@ app.get("/api/notes", (req, res) => {
         res.json(JSON.parse(data));
     });
 });
-
+//got tutor help
+app.post("/api/notes", function(req, res) {
+    
+    fs.readFile(path.join(__dirname, "Develop/db/db.json"), "utf8", (err, data) => {
+        if (err) throw err;
+        const returnedData = JSON.parse(data);
+    let noteId = req.body;
+    let id = returnedData.length;
+    noteId.id = id +1;
+    returnedData.push(noteId);
+    fs.writeFile(path.join(__dirname, "Develop/db/db.json"), JSON.stringify(returnedData),err => {
+        if (err) throw err;
+        res.json(returnedData);
+       
+    })
+    });
+   
+    });
+    
+    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
+    // It will do this by sending out the value "true" have a table
+    // req.body is available since we're using the body parsing middleware
+    
+  
 
 
 
@@ -40,3 +63,13 @@ app.get("/api/notes", (req, res) => {
 app.listen(PORT, () => {
     console.log("You started up the server");
 })
+
+// second no show means no more tutoring
+//following appointments
+    //two ways to make appointments
+        //same way i made this one and find what works for me
+        //second way to set aside a certain time.
+        //single 2-hour appointment
+        //1 hour appointment through out the week
+        //at the end of the session required to fillout the survey
+        //
