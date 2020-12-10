@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 // Global Variables
 // Declaring global variables
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 8080;
 // const db = require("Develop/db/db.json");
 let num = 0
 // Middlewear
@@ -14,47 +14,44 @@ let num = 0
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); 
 // We need a middlewear to have our css and javascript files be loaded from the public folder
-app.use(express.static('public'))
+app.use(express.static("public"))
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "Develop/public/index.html"))
+    res.sendFile(path.join(__dirname, "/public/index.html"))
 });
 
 
 app.get("/notes.html", (req, res) => {
-    res.sendFile(path.join(__dirname, "Develop/public/notes.html"));
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
 
 app.get("/api/notes", (req, res) => {
-    fs.readFile(path.join(__dirname, "Develop/db/db.json"), "utf8", (err, data) => {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
         if (err) throw err;
         res.json(JSON.parse(data));
     });
 });
-//got tutor help
-app.post("/api/notes", function(req, res) {
+// got tutor help
+
+    app.post("/api/notes", function(req, res) {
     
-    fs.readFile(path.join(__dirname, "Develop/db/db.json"), "utf8", (err, data) => {
-    if (err) throw err;
-    const returnedData = JSON.parse(data);
-    let noteId = req.body;
-    let id = returnedData.length;
-    noteId.id = id +1;
-    returnedData.push(noteId);
-    fs.writeFile(path.join(__dirname, "Develop/db/db.json"), JSON.stringify(returnedData),err => {
-    if (err) throw err;
-    res.json(returnedData);
+        fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
+        if (err) throw err;
+        const returnedData = JSON.parse(data);
+        let noteId = req.body;
+        let id = returnedData.length;
+        noteId.id = id +1;
+        returnedData.push(noteId);
+        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(returnedData),err => {
+        if (err) throw err;
+        res.json(returnedData);
+           
+        })
+        });
        
-    })
-    });
-   
-    });
-    
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-    // It will do this by sending out the value "true" have a table
-    // req.body is available since we're using the body parsing middleware
-    
+        });
+        
   
 
 
