@@ -52,7 +52,12 @@ app.get("/api/notes", (req, res) => {
        
         });
         
-  
+  app.delete("/api/notes/:id?", function (req,data) {
+    const returnedData = (data)
+    if (req.params.id === returnedData.id) {
+        res.send("/db/db.json")
+    }
+  }) 
 
 
 
